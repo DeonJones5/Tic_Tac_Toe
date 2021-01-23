@@ -20,16 +20,25 @@ public class TicTacToe {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Enter your placement (1-9):");
             int playerPosition = scanner.nextInt();
+            while (playerPostions.contains(playerPosition) || cpuPostions.contains(playerPostions)){
+                System.out.println("Position taken! Enter a correct Position");
+                playerPosition = scanner.nextInt();
+            }
 
             placePiece(gameBoard, playerPosition, "Player");
             // Do randomization to get the CPU position different than players (Or could try to do some Artificial Intelligence)
             Random random = new Random();
             int cpuPos = random.nextInt(9) + 1;
+            while (playerPostions.contains(cpuPos) || cpuPostions.contains(cpuPos)){
+                System.out.println("Position taken! Enter a correct Position");
+                cpuPos = random.nextInt(9) + 1;
+            }
             placePiece(gameBoard, cpuPos, "CPU");
 
             printGameBoard(gameBoard);
 
-            checkWinner();
+            String result = checkWinner();
+            System.out.println(result);
         }
     }
 
@@ -49,8 +58,10 @@ public class TicTacToe {
 
         if (user.equals("Player")){
             symbol = 'X';
+            playerPostions.add(position);
         } else if (user.equals("CPU")){
             symbol = 'O';
+            cpuPostions.add(position);
         }
 
         switch (position){
@@ -108,20 +119,16 @@ public class TicTacToe {
         winning.add(cross2);
 
         for (List l: winning){
-            if (playerPostions.contains(l)) {
+            if (playerPostions.containsAll(l)) {
                 return "Congratulations you WON!!";
-            } else if (cpuPostions.contains(l)){
+            } else if (cpuPostions.containsAll(l)){
                 return "CPU wins, Sorry!:(";
             } else if (playerPostions.size() + cpuPostions.size() == 9){
                 return "It's a tie!";
             }
         }
 
+        return "";
 
-
-
-
-
-        return null;
     }
 }
