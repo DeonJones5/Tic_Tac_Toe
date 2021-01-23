@@ -7,8 +7,7 @@ public class TicTacToe {
 
         public static void main(String[] args) {
 
-
-        char[][] gameBoard = {{' ', '|', ' ', '|', ' '},
+            char[][] gameBoard = {{' ', '|', ' ', '|', ' '},
                     {'-', '+', '-', '+', '-'},
                     {' ', '|', ' ', '|', ' '},
                     {'-', '+', ' ', '+', '-'},
@@ -26,20 +25,30 @@ public class TicTacToe {
             }
 
             placePiece(gameBoard, playerPosition, "Player");
+            String result = checkWinner();
+            if(result.length() > 0){
+                System.out.println(result);
+                break;
+            }
             // Do randomization to get the CPU position different than players (Or could try to do some Artificial Intelligence)
             Random random = new Random();
             int cpuPos = random.nextInt(9) + 1;
             while (playerPostions.contains(cpuPos) || cpuPostions.contains(cpuPos)){
-                System.out.println("Position taken! Enter a correct Position");
                 cpuPos = random.nextInt(9) + 1;
             }
             placePiece(gameBoard, cpuPos, "CPU");
 
             printGameBoard(gameBoard);
 
-            String result = checkWinner();
-            System.out.println(result);
+            result = checkWinner();
+            if(result.length() > 0){
+                System.out.println(result);
+                break;
+            }
         }
+        //Print final Game board
+            printGameBoard(gameBoard);
+
     }
 
     public static void printGameBoard(char[][] gameBoard){
