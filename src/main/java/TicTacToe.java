@@ -1,8 +1,12 @@
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class TicTacToe {
-    public static void main(String[] args) {
+
+        static ArrayList<Integer> playerPostions = new ArrayList<Integer>();
+        static ArrayList<Integer> cpuPostions = new ArrayList<Integer>();
+
+        public static void main(String[] args) {
+
 
         char[][] gameBoard = {{' ', '|', ' ', '|', ' '},
                     {'-', '+', '-', '+', '-'},
@@ -24,6 +28,8 @@ public class TicTacToe {
             placePiece(gameBoard, cpuPos, "CPU");
 
             printGameBoard(gameBoard);
+
+            checkWinner();
         }
     }
 
@@ -78,6 +84,44 @@ public class TicTacToe {
             default:
                 break;
         }
+    }
 
+    public static String checkWinner(){
+
+        List topRow = Arrays.asList(1, 2, 3);
+        List middleRow = Arrays.asList(4, 5, 6);
+        List bottomRow = Arrays.asList(7, 8, 9);
+        List leftColumn = Arrays.asList(1, 4, 7);
+        List middleColumn = Arrays.asList(2, 5, 8);
+        List rightColumn = Arrays.asList(3, 6, 9);
+        List cross1 = Arrays.asList(1, 5, 9);
+        List cross2 = Arrays.asList(7, 5, 3);
+
+        List<List> winning = new ArrayList<List>();
+        winning.add(topRow);
+        winning.add(middleRow);
+        winning.add(bottomRow);
+        winning.add(leftColumn);
+        winning.add(middleColumn);
+        winning.add(rightColumn);
+        winning.add(cross1);
+        winning.add(cross2);
+
+        for (List l: winning){
+            if (playerPostions.contains(l)) {
+                return "Congratulations you WON!!";
+            } else if (cpuPostions.contains(l)){
+                return "CPU wins, Sorry!:(";
+            } else if (playerPostions.size() + cpuPostions.size() == 9){
+                return "It's a tie!";
+            }
+        }
+
+
+
+
+
+
+        return null;
     }
 }
